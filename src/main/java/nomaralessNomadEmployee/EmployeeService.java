@@ -3,6 +3,8 @@ package nomaralessNomadEmployee;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -13,6 +15,7 @@ public class EmployeeService {
     public String employee() {
         return "Добро пожаловать в книгу учета сотрудников";
     }
+
     public String add(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
         if (employees.size() >= SIZE) {
@@ -44,6 +47,7 @@ public class EmployeeService {
     }
 
     public String allemployee() {
-            return employees.toString();
+
+        return String.valueOf(Collections.unmodifiableList(employees));
     }
 }
