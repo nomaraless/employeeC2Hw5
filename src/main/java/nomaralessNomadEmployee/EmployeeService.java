@@ -2,52 +2,50 @@ package nomaralessNomadEmployee;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeService {
-    private final List<Employee> employees = new ArrayList<>(List.of());
+    private final HashMap<String, Employee> employees = new HashMap(Map.of());
     private final int SIZE = 10;
 
     public String employee() {
         return "Добро пожаловать в книгу учета сотрудников";
     }
 
-    public String add(String firstName, String lastName) {
+    public Employee add(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
+        String employeeKey = firstName + " " + lastName;
         if (employees.size() >= SIZE) {
             throw new EmployeeStorageIsFullException();
         }
-        if (employees.contains(employee)) {
+        if (employees.containsKey(employeeKey)) {
             throw new EmployeeAlreadyAddedException();
         }
-        employees.add(employee);
-        return employee.toString();
+        employees.put(employeeKey, employee);
+        return employees.get(employeeKey);
     }
 
-    public String remove(String firstName, String lastName) {
+    public Employee remove(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if (!employees.contains(employee)) {
+        String employeeKey = firstName + " " + lastName;
+        if (!employees.containsKey(employeeKey)) {
             throw new EmployeeNotFoundException();
         }
-        employees.remove(employee);
-        return employee.toString();
+        employees.remove(employeeKey);
+        return employees.get(employeeKey);
     }
 
-    public String find(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        if (!employees.contains(employee)) {
+    public Employee find(String firstName, String lastName) {
+        String employeeKey = firstName + " " + lastName;
+        if (!employees.containsKey(employeeKey)) {
             throw new EmployeeNotFoundException();
         } else {
-            return employee.toString();
+            return employees.get(employeeKey);
         }
     }
 
-    public String allemployee() {
-
-        return String.valueOf(Collections.unmodifiableList(employees));
+    public String allEmployee() {
+        return employees.values().toString();
     }
 }
