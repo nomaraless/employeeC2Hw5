@@ -7,38 +7,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EmployeeController {
-    private EmployeeService employeeService;
+    private EmployeeServiceImp serviceImp;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public EmployeeController(EmployeeServiceImp serviceImp) {
+        this.serviceImp = serviceImp;
     }
 
     @RequestMapping
     public String employee() {
-        return employeeService.employee();
+        return serviceImp.employee();
     }
 
     @GetMapping(path = "/add")
     public Employee add(@RequestParam(value = "firstName", required = false) String firstName,
-                        @RequestParam(value = "lastName", required = false) String lastName) {
-        return employeeService.add(firstName, lastName);
+                        @RequestParam(value = "lastName", required = false) String lastName,
+                        @RequestParam(value = "department", required = false) int department,
+                        @RequestParam(value = "salary", required = false) double salary) {
+        return serviceImp.add(firstName, lastName, department, salary);
 
     }
 
     @GetMapping(path = "/remove")
     public Employee remove(@RequestParam(value = "firstNAme", required = false) String firstName,
-                           @RequestParam(value = "lastName", required = false) String lastName) {
-        return employeeService.remove(firstName, lastName);
+                           @RequestParam(value = "lastName", required = false) String lastName,
+                           @RequestParam(value = "department", required = false) int department,
+                           @RequestParam(value = "salary", required = false) double salary) {
+        return serviceImp.remove(firstName, lastName, department, salary);
     }
 
     @GetMapping(path = "/find")
     public Employee find(@RequestParam(value = "firstName", required = false) String firstName,
                          @RequestParam(value = "lastName", required = false) String lastName) {
-        return employeeService.find(firstName, lastName);
+        return serviceImp.find(firstName, lastName);
     }
 
     @GetMapping(path = "/all")
     public String all() {
-        return employeeService.allEmployee();
+        return serviceImp.allEmployee().toString();
     }
 }

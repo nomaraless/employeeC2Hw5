@@ -5,47 +5,14 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class EmployeeService {
-    private final HashMap<String, Employee> employees = new HashMap(Map.of());
-    private final int SIZE = 10;
+public interface EmployeeService {
+    String employee();
 
-    public String employee() {
-        return "Добро пожаловать в книгу учета сотрудников";
-    }
+    Employee add(String firstName, String lastName, int departament, double salary);
 
-    public Employee add(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        String employeeKey = firstName + " " + lastName;
-        if (employees.size() >= SIZE) {
-            throw new EmployeeStorageIsFullException();
-        }
-        if (employees.containsKey(employeeKey)) {
-            throw new EmployeeAlreadyAddedException();
-        }
-        employees.put(employeeKey, employee);
-        return employees.get(employeeKey);
-    }
+    Employee remove(String firstName, String lastName, int department, double salary);
 
-    public Employee remove(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        String employeeKey = firstName + " " + lastName;
-        if (!employees.containsKey(employeeKey)) {
-            throw new EmployeeNotFoundException();
-        }
-        employees.remove(employeeKey);
-        return employees.get(employeeKey);
-    }
+    Employee find(String firstName, String lastName);
 
-    public Employee find(String firstName, String lastName) {
-        String employeeKey = firstName + " " + lastName;
-        if (!employees.containsKey(employeeKey)) {
-            throw new EmployeeNotFoundException();
-        } else {
-            return employees.get(employeeKey);
-        }
-    }
-
-    public String allEmployee() {
-        return employees.values().toString();
-    }
+    Collection<Employee> allEmployee();
 }
