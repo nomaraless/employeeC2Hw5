@@ -1,5 +1,7 @@
 package nomaralessNomadEmployee;
 
+import org.apache.commons.lang3.StringUtils;
+import nomaralessNomadEmployee.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -21,6 +23,7 @@ public class EmployeeServiceImp implements EmployeeService {
     public Employee add(String firstName, String lastName, int departament, double salary) {
         Employee employee = new Employee(firstName, lastName, departament, salary);
         String employeeKey = firstName + " " + lastName;
+        checkInput(firstName,lastName);
         if (employees.size() >= SIZE) {
             throw new EmployeeStorageIsFullException();
         }
@@ -55,5 +58,12 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public Collection<Employee> allEmployee() {
         return Collections.unmodifiableCollection(employees.values());
+    }
+
+    @Override
+    public void checkInput(String firstName, String lastName) {
+        if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
+            throw new BadRequestException();
+        }
     }
 }

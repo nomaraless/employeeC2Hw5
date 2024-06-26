@@ -1,5 +1,7 @@
 package nomaralessNomadEmployee;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class Employee {
@@ -9,8 +11,8 @@ public class Employee {
     private double salary;
 
     public Employee(String firstName, String lustName, int departament, double salary) {
-        this.firstName = firstName;
-        this.lustName = lustName;
+        this.firstName = StringUtils.capitalize(firstName);
+        this.lustName = StringUtils.capitalize(lustName);
         this.departament = departament;
         this.salary = salary;
     }

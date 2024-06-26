@@ -15,4 +15,6 @@ public interface EmployeeService {
     Employee find(String firstName, String lastName);
 
     Collection<Employee> allEmployee();
+
+    void checkInput(String firstName, String lastName);
 }
