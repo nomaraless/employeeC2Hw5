@@ -22,6 +22,7 @@ public class DepartmentController {
                 ResponseEntity.ok(service.getAllByDepartment(department));
     }
 
+
     @GetMapping("/max-salary")
     public Employee maxSalary(@RequestParam Integer department) {
         return service.maxSalary(department);
@@ -30,5 +31,10 @@ public class DepartmentController {
     @GetMapping("/min-salary")
     public Employee minSalary(@RequestParam Integer department) {
         return service.minSalary(department);
+    }
+
+    @GetMapping("/sum-salary")
+    public double sumSalary(@RequestParam Integer department) {
+        return service.sumSalary(department);
     }
 }

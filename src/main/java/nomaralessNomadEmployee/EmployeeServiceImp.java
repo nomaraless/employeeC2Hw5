@@ -1,18 +1,14 @@
 package nomaralessNomadEmployee;
 
 import org.apache.commons.lang3.StringUtils;
-import nomaralessNomadEmployee.BadRequestException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
-    final HashMap<String, Employee> employees = new HashMap(Map.of());
-    final int SIZE = 10;
+    final HashMap<String, Employee> employees = new HashMap<>(Map.of());
+    final int SIZE = 5;
 
     @Override
     public String employee() {
@@ -23,13 +19,13 @@ public class EmployeeServiceImp implements EmployeeService {
     public Employee add(String firstName, String lastName, int departament, double salary) {
         Employee employee = new Employee(firstName, lastName, departament, salary);
         String employeeKey = firstName + " " + lastName;
-        checkInput(firstName,lastName);
         if (employees.size() >= SIZE) {
             throw new EmployeeStorageIsFullException();
         }
         if (employees.containsKey(employeeKey)) {
             throw new EmployeeAlreadyAddedException();
         }
+        checkInput(firstName,lastName);
         employees.put(employeeKey, employee);
         return employees.get(employeeKey);
     }
@@ -56,8 +52,8 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public Collection<Employee> allEmployee() {
-        return Collections.unmodifiableCollection(employees.values());
+    public List<Employee> allEmployee() {
+        return new ArrayList<>(employees.values());
     }
 
     @Override
